@@ -24,14 +24,15 @@ function handleErrors (response){
 }
 
 function parseJSON(response){
-	return response.json();
+	return response.json().then(function(data){
+		return data.results[0]});
 }
 
-function updateProfile(response){
-	updateFullName(response);
-	updateUsername(response);
-	updateUserInfo(response);
-	updatePrifileImg(response);
+function updateProfile(data){
+	updateFullName(data);
+	updateUsername(data);
+	updateUserInfo(data);
+	updatePrifileImg(data);
 }
 
 function printError(error){
@@ -39,25 +40,25 @@ function printError(error){
 }
 
 
-function updateFullName(response){
-	var firstName = response.results[0].name.first;
-	var lastName = response.results[0].name.last;
+function updateFullName(data){
+	var firstName = data.name.first;
+	var lastName = data.name.last;
 	fullName.innerHTML = `${firstName} ${lastName}`;
 }
 
-function updateUsername(response){
-	var newUsename = response.results[0].login.username;
+function updateUsername(data){
+	var newUsename = data.login.username;
 	username.innerHTML = newUsename;
 }
 
-function updateUserInfo(response){
-	var newEmail = response.results[0].email;
-	var newCity = response.results[0].location.city;
+function updateUserInfo(data){
+	var newEmail = data.email;
+	var newCity = data.location.city;
 	email.innerHTML = newEmail;
 	city.innerHTML = newCity;
 }
 
-function updatePrifileImg(response){
-	var newImage = response.results[0].picture.medium;
+function updatePrifileImg(data){
+	var newImage = data.picture.medium;
 	avatar.src = newImage;
 }
